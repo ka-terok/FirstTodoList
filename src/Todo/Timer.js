@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import humanizeDuration from 'humanize-duration'
 import 'moment-precise-range-plugin';
 
@@ -25,17 +25,15 @@ function Timer ({deadline}){
     return shortEnglishHumanizer(new Date(deadline).getTime() - now.getTime(), { units: ["y", "mo", "d", "h", "m", "s" ] ,  maxDecimalPoints: 0 })
   }
 
-  const [timer, setTimer]=useState(newValueTimer())
+const [timer, setTimer] = useState(newValueTimer())
   useEffect ( () => setTimer(newValueTimer()), [deadline])  
 
-  function updtateTimer() {
-    setInterval(() => {
-      setTimer(newValueTimer())
-      updtateTimer()
-    } , 1000);
-  }
-
-//useEffect ( () => updtateTimer(), [])
+useEffect (() => {
+  const interval = setInterval(() => {
+    setTimer(newValueTimer())
+  } , 1000);
+  return () => clearInterval(interval)
+}, [])
 
   return timer
 }

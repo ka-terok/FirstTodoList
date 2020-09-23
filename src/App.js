@@ -19,7 +19,7 @@ function App() {
   const [activeTodoId, setActiveTodoId] = React.useState(false)
   const [filters, setFilters] = React.useState(filterTemple)
   const [loading, setLoading] = React.useState(true)
-
+  const [isOpenGuid, setOpenGuid]=React.useState(true)
 
 useEffect(()=>{
   if ( getCookie('cookieTodo') === undefined ) {
@@ -111,9 +111,9 @@ function removeTodo(id){
 
 function saveTodo (todo) {
   if (todo && todo.id) {
-    const newTodos=todos.map(todoO => todoO.id === todo.id ? todo : todoO)
-    setTodos(newTodos)
-    document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`
+      const newTodos = todos.map(todoO => todoO.id === todo.id ? todo : todoO)
+      setTodos(newTodos)
+      document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`
     }       
     else {
       const newTodos=todos.concat({
@@ -155,6 +155,12 @@ function handleChange(title) {
   })
 }
 
+function closeGuid(){
+  setOpenGuid(false)
+}
+
+
+
 return (
     <Context.Provider value={{removeTodo, openModalChange, closeModalChange, saveTodo} }>
       <div className='wrapper'>
@@ -176,9 +182,9 @@ return (
           <div style={{width: '15%', textAlign: 'center'}}></div>
         </div>
         {loading && <Loader />}
-        {todos.length ? (<TodoList todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
-        {modalIsOpen && <Modal className='test'  todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
-        <Guid  />
+        {todos.length ? (<TodoList className='test' todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
+        {modalIsOpen && <Modal className='test' isTourOpen={isOpenGuid} todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
+        <Guid  closeTour={closeGuid} isTourOpen={isOpenGuid}/>
         
       </div>   
     </Context.Provider>
