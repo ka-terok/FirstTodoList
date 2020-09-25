@@ -34,11 +34,20 @@ export default class Modal extends React.Component{
             });
         setTimeout(() => this.exampleTask(i+1), 300)
     };
+<<<<<<< HEAD
+=======
+    
+>>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
     componentDidMount() {
         if (this.props.isTourOpen) {
             this.exampleTask(0)
         }
     }
+<<<<<<< HEAD
+=======
+
+      
+>>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
     render() {
         const {todo} = this.state; 
         const {closeModalChange} = this.context;
@@ -47,22 +56,36 @@ export default class Modal extends React.Component{
         <React.Fragment > 
             <div className = "modal">
                 <div className = "modal-body">
+<<<<<<< HEAD
                     <div style={{display: 'flow-root'}}>
                         <button className="changeModalclose" style={{float: 'right'}} onClick={()=>{closeModalChange()}}>
                             <img alt={'Закрыть'} style={{width: '10px'}} src={iconClose}/>
                             </button>
                     </div>
+=======
+                    <div style={{display: 'flow-root'}}><button className="changeModalclose" style={{float: 'right'}} onClick={()=>{closeModalChange()}}><img alt={'Закрыть'} style={{width: '10px'}} src={iconClose}/></button>
+                    </div>
+                
+>>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
                     <div className="edit" style = {{justifyContent: 'center',  fontWeight: 'bold'}}> 
                         <div className="editText">Edit task  </div>  
                     </div>
                     <div className = "edit"> 
                         <div className = "editText">Task</div>
+<<<<<<< HEAD
                         <input className = 'inputModal' value={todo ? todo.title : null} onChange = {e=>this.setState({
+=======
+                        <input className = 'inputModal' value={todo ? todo.title : null} onChange = { e=>this.setState({
+>>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
                             todo: {
                                 ...todo, 
                                 title: e.target.value,
                                 isOpen: false,
+<<<<<<< HEAD
                             } 
+=======
+                            }, 
+>>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
                         })}  />
                     </div>
                     <div className="edit"> 
@@ -77,9 +100,15 @@ export default class Modal extends React.Component{
                             }
                         }/>
                     </div>
+<<<<<<< HEAD
                     <button className="changeModal" onClick = {() =>{
                         saveTodo(todo)
                         closeModalChange()
+=======
+                    <button className="changeModal" onClick = {() => {
+                        saveTodo(todo);
+                        closeModalChange();
+>>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
                         } 
                         }>Save
                     </button>

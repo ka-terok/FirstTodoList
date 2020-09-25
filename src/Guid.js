@@ -7,7 +7,13 @@ import endTour from './endTour.png'
 export default  class Guid extends React.Component {
     
     render() {
+<<<<<<< HEAD
         
+=======
+        let x = 2;
+x++;        
+alert( x );
+>>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
         const {openModalChange} = this.context;
         
         const steps = [{
