@@ -141,19 +141,21 @@ visibility: hidden;
 
 .todoItem {
   word-wrap: break-word;
-  width: 30%;
+  width: 50%;
+  text-align: left;
  }
 
 .todoItemDate {
   word-wrap: break-word;
-  width: 31%;
+  width: 20%;
   margin-right: 10px;
+  text-align: left;
   }
 
 .todoItemDate2 {
   word-wrap: break-word;
-  width: 29%;
-  text-align: center
+  width: 20%;
+  text-align: left;
 }
 
 .changeCheif {
@@ -163,20 +165,6 @@ visibility: hidden;
   border:1px solid #40e0d0
 }
 
-.filter {
-  background: #e8ebee;
-  font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
-  padding: 8px;
-  border:1px solid #40e0d0;
-  width: 82px;
-  color: #587597;
-  font-size: 16px;
-}
-
-.filter:hover {
-  box-shadow: 0 0 5px 2px rgba(122,122,122,0.5);
-  }
-
 .addTodo {
   background: #40e0d0;
   font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
@@ -185,8 +173,6 @@ visibility: hidden;
   border:1px solid #40e0d0;
   font-weight: 500;
   width: 15%;
-  float: right;
-  margin-bottom: 1rem;
   }
 
 .deleteСompleted  {
@@ -196,8 +182,6 @@ visibility: hidden;
   border:1px solid  rgb(236,172,143);
   font-weight: 500;
   width: 15%;
-  float: right;
-  margin-bottom: 1rem;
   margin-right: 15px; 
   }
  
@@ -215,8 +199,6 @@ visibility: hidden;
   border:1px solid #40e0d0;
   font-weight: 300;
   width: 15%;
-  float: right;
-  margin-bottom: 1rem;
   margin-right: 15px;
   }
 
@@ -232,8 +214,6 @@ visibility: hidden;
   border:1px solid #40e0d0;
   font-weight: 500;
   width: 15%;
-  float: right;
-  margin-bottom: 1rem;
   margin-right: 15px;
   }  
 
@@ -249,9 +229,10 @@ visibility: hidden;
   }
 
 .panel {
+  display: flex;
+  justify-content: flex-end;
   margin-bottom: 1rem;
 }
-
 .seach {
   width: 100%;
   margin: 1rem 0;
@@ -388,3 +369,63 @@ visibility: hidden;
     transform: translate(24px, 0);
   }
 }
+
+.eTpeTG {
+  top: 15px;
+  right: 15px;
+}
+
+.important {
+  width: 40px;
+  height: 40px;
+  margin: 3px 15px 4px 3px;
+  color: #587597;
+  font-size: 16px;
+  text-align: center;
+  border: #40e0d0;
+}
+
+.filter {
+  justify-content: flex-end;
+  display: flex;
+  align-self: center;
+  align-items: center;
+  border-radius: 5px ;
+  border: 1px solid #587597  ;
+  padding: 2px 8px 2px 8px;
+}
+
+.textFilter {
+  margin-right: 10px;
+}
+
+.filter:hover {
+  box-shadow: 0 0 5px 2px rgba(122,122,122,0.5);
+  cursor: pointer;
+}
+
+.panelFilters {
+  justify-content: flex-end;
+  display: none;
+}
+
+.openFilters {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.buttomFilters {
+  margin-left: 10px ;
+  align-self: center;
+  align-items: center;
+  border-radius: 5px ;
+  border: 1px solid #587597  ;
+  padding: 6px 8px 6px 8px;
+}
+
+.buttomFilters:hover {
+  box-shadow: 0 0 5px 2px rgba(122,122,122,0.5);
+  cursor: pointer;
+}
+

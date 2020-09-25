@@ -1,9 +1,10 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {useContext, useState} from 'react'
 import Context from '../context'
 import PropTypes, { func } from 'prop-types'
 import deteteTodo from './delete.png'
 import Timer from './Timer'
 import moment from 'moment';
+import { max } from 'moment'
 moment.locale('ru')
 
 
@@ -11,14 +12,35 @@ function TodoItem({todo, index, onChange}){
     const{removeTodo}=useContext(Context)
     const{openModalChange}=useContext(Context)
     const classes=[]
+    const {importants} = useContext(Context)
+    const now = new Date();
+    const [inputValue, setInputValue] = useState(todo.importants)
+
     
-    
+    function checkInput(inputValue){
+        if ((inputValue) !== "") {
+        let newValue = parseInt(inputValue, 10)
+        if (!isNaN(newValue)) {
+            if (newValue < 6) { 
+                importants(newValue, todo.id)
+                } else {
+                    alert('Write 0-5')
+                    setInputValue('')     
+                    }
+            } else if (newValue = '') {
+                setInputValue('')
+            } else {
+                alert('Write 0-5')
+                setInputValue('') 
+            }} else {
+                setInputValue('') 
+            }
+        }
+
     if (todo.completed){
         classes.push('done')       
     }
-     
-    const now = new Date();
-   
+    
     if (now > todo.deadline) {
         classes.push ('timeIsOver')
     }
@@ -41,7 +63,7 @@ function TodoItem({todo, index, onChange}){
                     {todo.title}                     
                 </div> 
                 <div className={"todoItemDate" + ' '+ classes.join(' ')} > 
-                    {todo.deadline ? moment(todo.deadline).format('DD MMMM YYYY h:mm:s') : 'Без срока'}
+                    {todo.deadline ? moment(todo.deadline).format('DD MMM YYYY h:mm:s') : 'Без срока'}
                 </div> 
                 <div className={todo.completed ? 'closeTimer + todoItemDate2' : 'todoItemDate2' }>
                     <Timer deadline={todo.deadline}/>
@@ -50,11 +72,18 @@ function TodoItem({todo, index, onChange}){
                     {!todo.completed ? '' : todo.done}   
                 </div>
             </div> 
+                <div> 
+                    <input className='important' value={inputValue} onChange={e => {
+                        setInputValue(e.target.value)
+                        checkInput(e.target.value)
+                        }}
+                    />
+                </div>
                 <div className="todoChange" > 
-                    <div className="changeCheif" onClick={()=>openModalChange(todo.id)}>Change</div>
+                    <div className="changeCheif" onClick={() => openModalChange(todo.id)}>Change</div>
                 </div >
                 <div className="todoDelete" onClick={()=> removeTodo(todo.id)}> 
-                    <img className='wibro' src={deteteTodo} alt={'Удалить'}/>                 
+                    <img className='wibro' src={deteteTodo} alt={'Delete'}/>                 
                 </div>
         </div>
          

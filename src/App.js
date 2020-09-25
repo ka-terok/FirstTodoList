@@ -6,11 +6,13 @@ import moment from 'moment';
 import Modal from './Modal/index';
 import Seach from './Todo/Seach'
 import Guid from './Guid';
-
+import HeaderTable from './HeaderTable';
 moment.locale('ru')
 
 const filterTemple={
   title: '',
+  important: '',
+  length: ''
   }
 
 function App() {
@@ -19,28 +21,42 @@ function App() {
   const [activeTodoId, setActiveTodoId] = React.useState(false)
   const [filters, setFilters] = React.useState(filterTemple)
   const [loading, setLoading] = React.useState(true)
-
+  const [isOpenGuid, setOpenGuid]=React.useState(false)
 
 useEffect(()=>{
+  checkРassword()
   if ( getCookie('cookieTodo') === undefined ) {
-    fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
-    .then(response => response.json())
-    .then(todos => {
-      todos=todos.map(item => {
-        const myDate  = randomDate(new Date(2020, 9, 8), new Date());
-        item.deadline = moment(myDate);
-        item.completed && (item.done = moment(new Date()).format('DD MMMM YYYY h:mm:s'))
-        return item
+    if (getCookie('visits') === 'old user') {
+      loadTodos ()
+      document.cookie = `cookieTodo=${JSON.stringify(todos)}`
+      setLoading(false)
+      } else {
+      loadTodos ()
+      document.cookie = `cookieTodo=${JSON.stringify(todos)}`
+      setLoading(false)
+      setOpenGuid(true)
+      document.cookie = "visits=old user"
+    }} else {
+      setTodos(JSON.parse(getCookie('cookieTodo')))
+      setLoading(false)
+      setOpenGuid(false)
+    }
+  }, [])
+
+function loadTodos () {
+  fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
+      .then(response => response.json())
+      .then(todos => {
+        todos=todos.map(item => {
+          const myDate  = randomDate(new Date(2020, 9, 8), new Date());
+          item.deadline = moment(myDate);
+          item.completed && (item.done = moment(new Date()).format('DD MMM YYYY h:mm:s'))
+          item.importants = 1 
+          return item
+          })
+          setTodos(todos)
         })
-        setTodos(todos)
-        document.cookie = `cookieTodo=${JSON.stringify(todos)}`
-        setLoading(false)  
-    }) 
-  } else {
-    setTodos(JSON.parse(getCookie('cookieTodo')))
-    setLoading(false)
-  }
-}, [])
+      }
 
 function getCookie(name) {
   let matches = document.cookie.match(new RegExp(
@@ -91,11 +107,11 @@ function closeModalChange () {
   setOpen(false)
   }
 
-function  toggleTodo(id) {
+function toggleTodo(id) {
   const newTodos=todos.map(todo =>{
     if(todo.id===id){
     todo.completed=!todo.completed
-    todo.done = moment(new Date()).format('DD MMMM YYYY h:mm:s')
+    todo.done = moment(new Date()).format('DD MMM YYYY h:mm:s')
    }
    return todo
   })
@@ -104,16 +120,24 @@ function  toggleTodo(id) {
 }
 
 function removeTodo(id){
-  const newTodos=todos.filter(todo=>todo.id !==id)
-  setTodos(newTodos);
-  document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`;
+  const doIt = window.confirm (`Are you sure ?`)
+    if (doIt) {
+      const newTodos=todos.filter(todo=>todo.id !==id)
+      setTodos(newTodos);
+      document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`;
+    } else {
+      alert(`Ok we won't do it `)
+    }
   }
 
-function saveTodo (todo) {
-  if (todo && todo.id) {
-    const newTodos=todos.map(todoO => todoO.id === todo.id ? todo : todoO)
-    setTodos(newTodos)
-    document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`
+
+function saveTodo (todo) { 
+  const doIt = window.confirm (`Are you sure you want to add a task?`);
+  if (doIt) {
+   if (todo && todo.id) {
+      const newTodos = todos.map(todoO => todoO.id === todo.id ? todo : todoO)
+      setTodos(newTodos)
+      document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`
     }       
     else {
       const newTodos=todos.concat({
@@ -122,30 +146,80 @@ function saveTodo (todo) {
           completed: false,
           deadline: todo.deadline,
           done: todo.done,
+          importants: todo.importants,
           })
       setTodos(newTodos)
-      document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`};
+      document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`} 
+    } else {alert(`Ok we won't do it `) }
 }
 
 function deleteСompleted () {
-  const newTodos = todos.filter(todoO => !todoO.completed)
-  setTodos(newTodos)
-  document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`
+  const doIt = window.confirm (`Are you sure ?`)
+    if (doIt) {
+    const newTodos = todos.filter(todoO => !todoO.completed)
+    setTodos(newTodos)
+    document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`
+    } else {
+      alert(`Ok we won't do it `)
+    }
 }  
 
 function completedAll () {
   const newTodos = todos.map(item => {
     item.completed = true
-    item.done = moment(new Date()).format('DD MMMM YYYY h:mm:s')
+    item.done = moment(new Date()).format('DD MMM YYYY h:mm:s')
     return item
    })
-  console.log(newTodos)
   setTodos(newTodos)  
   document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`  
   }
 
 function filter() {
-  return todos.filter(todo =>  todo.title.indexOf(filters.title) !== -1)
+  return  todos.filter(todo => todo.title.indexOf(filters.title) !== -1).sort(filterImportant())}
+
+function changeFilterState(value) {
+  switch (value) {
+    case "lessToBig": 
+    setFilters({
+      ...filters,
+      important: "lessToBig",
+    });
+    break;
+    case "bigToLess": 
+    setFilters({
+      ...filters,
+      important: "bigToLess",
+    });
+    break;
+    case "alphabetBigToLess": 
+    setFilters({
+      ...filters,
+      important: "",
+      length: "alphabetBigToLess",
+    });
+    break;
+    case "alphabetLessToBig": 
+    setFilters({
+      ...filters,
+      important: "",
+      length: "alphabetLessToBig",
+    });
+    break;
+    case "leghtBigToLess": 
+    setFilters({
+      ...filters,
+      important: "",
+      length: "leghtBigToLess",
+    });
+    break;
+    case "leghtLessToBig": 
+    setFilters({
+      ...filters,
+      important: "",
+      length: "leghtLessToBig",
+    });
+    break;
+  }
 }
 
 function handleChange(title) {
@@ -155,31 +229,67 @@ function handleChange(title) {
   })
 }
 
+function closeGuid(){
+  setOpenGuid(false)
+}
+
+function openGuid(){
+  setOpenGuid(true)
+}
+
+function checkРassword() {
+  while (login != 'sekret') {
+    var login = prompt('Enter the password', '')
+  }
+}
+
+function importants(newValue, id) {
+  setTodos(todos.map(item =>{
+    if (item.id === id) {
+    item.importants = newValue
+    return item
+    } else {
+      return item
+    }
+  })) 
+  document.cookie = `cookieTodo=${JSON.stringify(todos)}`
+}
+
+function filterImportant(){
+  if (filters.important==="lessToBig") {
+    return (prev, next) => prev.importants - next.importants;
+  } else if(filters.important === "bigToLess") {
+    return (prev, next) => next.importants - prev.importants;
+  } else if(filters.length === "alphabetBigToLess") {
+    return (prev, next) => {
+      if ( prev.title < next.title ) return -1;
+      if ( prev.title > next.title ) return 1;
+    }
+  } else if (filters.length === "alphabetLessToBig") {
+    return (prev, next) => {
+      if ( prev.title > next.title ) return -1;
+      if ( prev.title < next.title ) return 1;
+    }
+  } else if(filters.length === "leghtBigToLess") {
+      return (prev, next) => next.title.length - prev.title.length;
+    } else if(filters.length === "leghtLessToBig") {
+      return (prev, next) => prev.title.length - next.title.length;
+    }  
+  }
+
+
 return (
-    <Context.Provider value={{removeTodo, openModalChange, closeModalChange, saveTodo} }>
+    <Context.Provider value={{removeTodo, openModalChange, openGuid, closeModalChange, saveTodo, completedAll, deleteСompleted, deleteCookie, changeFilterState, importants, filter}}>
       <div className='wrapper'>
         <h1>The purpose of my life</h1>     
         <React.Suspense fallback={<Loader />}>
         <Seach changeTitle={handleChange} title={filters.title}/>
         </React.Suspense>
-        <div className='panel'>
-        <div className='addTodo' data-tut='reactur__state' onClick={()=>openModalChange()}>Add todo</div> 
-          <div className='completedAll' onClick={()=> completedAll()}> Completed All</div>
-          <div className='deleteСompleted' onClick={()=> deleteСompleted()}> Delete сompleted</div>
-          <div className='clearCookie' onClick={()=>deleteCookie('cookieTodo')}>Clear Cookie</div>
-        </div>
-        <div className="nameTable">
-          <div style={{width: '25%'}}>Task</div> 
-          <div style={{width: '22%'}}>Deadline</div>
-          <div style={{width: '26%', textAlign: 'center'}}>Before the deadline</div>
-          <div style={{width: '16%', textAlign: 'center'}}>Done</div>
-          <div style={{width: '15%', textAlign: 'center'}}></div>
-        </div>
+        < HeaderTable  />
         {loading && <Loader />}
-        {todos.length ? (<TodoList todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
-        {modalIsOpen && <Modal className='test'  todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
-        <Guid  />
-        
+        {todos.length ? (<TodoList className='test' todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
+        {modalIsOpen && <Modal className='test' isTourOpen={isOpenGuid} todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
+        <Guid  closeTour={closeGuid} isTourOpen={isOpenGuid}/>
       </div>   
     </Context.Provider>
   );
