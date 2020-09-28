@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 import React, {useContext, useState} from 'react'
-=======
-import React, {useContext} from 'react'
->>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
 import Context from '../context'
 import PropTypes, { func } from 'prop-types'
 import deteteTodo from './delete.png'

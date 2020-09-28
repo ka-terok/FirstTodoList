@@ -21,14 +21,10 @@ function App() {
   const [activeTodoId, setActiveTodoId] = React.useState(false)
   const [filters, setFilters] = React.useState(filterTemple)
   const [loading, setLoading] = React.useState(true)
-<<<<<<< HEAD
   const [isOpenGuid, setOpenGuid]=React.useState(false)
-=======
-  const [isOpenGuid, setOpenGuid]=React.useState(true)
->>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
 
 useEffect(()=>{
-  checkРassword()
+  //checkРassword()
   if ( getCookie('cookieTodo') === undefined ) {
     if (getCookie('visits') === 'old user') {
       loadTodos ()
@@ -134,16 +130,11 @@ function removeTodo(id){
     }
   }
 
-<<<<<<< HEAD
-
 function saveTodo (todo) { 
   const doIt = window.confirm (`Are you sure you want to add a task?`);
   if (doIt) {
    if (todo && todo.id) {
-=======
-function saveTodo (todo) {
-  if (todo && todo.id) {
->>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
+
       const newTodos = todos.map(todoO => todoO.id === todo.id ? todo : todoO)
       setTodos(newTodos)
       document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`
@@ -242,7 +233,6 @@ function closeGuid(){
   setOpenGuid(false)
 }
 
-<<<<<<< HEAD
 function openGuid(){
   setOpenGuid(true)
 }
@@ -286,8 +276,7 @@ function filterImportant(){
       return (prev, next) => prev.title.length - next.title.length;
     }  
   }
-=======
->>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
+
 
 
 return (
@@ -302,10 +291,6 @@ return (
         {todos.length ? (<TodoList className='test' todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
         {modalIsOpen && <Modal className='test' isTourOpen={isOpenGuid} todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
         <Guid  closeTour={closeGuid} isTourOpen={isOpenGuid}/>
-<<<<<<< HEAD
-=======
-        
->>>>>>> ae4a8bc767a4850ad51415f14efe53713470573a
       </div>   
     </Context.Provider>
   );
