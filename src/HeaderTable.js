@@ -1,5 +1,4 @@
 import React, {useContext, useState} from 'react'
-import PropTypes from 'prop-types'
 import Context from './context'
 import iconFilter from './filterIcon.png'
 
@@ -15,7 +14,7 @@ function HeaderTable (){
     
     
     function openFilters (){
-        openDiv === "panelFilters" ? setOpenDiv('openFilters') :setOpenDiv('panelFilters')
+        openDiv === "panelFilters" ? setOpenDiv('openFilters') : setOpenDiv('panelFilters')
     }
     return (
         <div>

@@ -7,6 +7,8 @@ import Modal from './Modal/index';
 import Seach from './Todo/Seach'
 import Guid from './Guid';
 import HeaderTable from './HeaderTable';
+import Login from './Modal/login'
+import Register from './Modal/Register';
 moment.locale('ru')
 
 const filterTemple={
@@ -22,10 +24,12 @@ function App() {
   const [filters, setFilters] = React.useState(filterTemple)
   const [loading, setLoading] = React.useState(true)
   const [isOpenGuid, setOpenGuid]=React.useState(false)
+  const [openRegister, setOpenRegister]=React.useState(false)
+  const [openLogin, setOpenLogin]=React.useState(false)
 
 useEffect(()=>{
-  //checkРassword()
-  if ( getCookie('cookieTodo') === undefined ) {
+  setOpenLogin(true)
+  if (getCookie('cookieTodo') === undefined || getCookie('cookieTodo').length === 2) {
     if (getCookie('visits') === 'old user') {
       loadTodos ()
       document.cookie = `cookieTodo=${JSON.stringify(todos)}`
@@ -40,8 +44,7 @@ useEffect(()=>{
       setTodos(JSON.parse(getCookie('cookieTodo')))
       setLoading(false)
       setOpenGuid(false)
-    }
-  }, [])
+  }}, [] )
 
 function loadTodos () {
   fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
@@ -96,6 +99,22 @@ function deleteCookie(name) {
 
 function randomDate(start, end) {
   return new Date(start.getTime()+ Math.random() * (end.getTime() - start.getTime()));
+}
+
+function openRegistrForm (){
+  setOpenRegister(true)
+}
+
+function closeRegistrForm (){
+  setOpenRegister(false)
+}
+
+function closeLoginForm (){
+  setOpenLogin(false)
+}
+
+function openLoginForm (){
+  setOpenLogin(true)
 }
 
 function openModalChange(id) {
@@ -277,19 +296,19 @@ function filterImportant(){
     }  
   }
 
-
-
 return (
-    <Context.Provider value={{removeTodo, openModalChange, openGuid, closeModalChange, saveTodo, completedAll, deleteСompleted, deleteCookie, changeFilterState, importants, filter}}>
+    <Context.Provider value={{removeTodo, openModalChange, closeLoginForm, closeRegistrForm, openLoginForm,  openRegistrForm, openGuid, closeModalChange, saveTodo, completedAll, deleteСompleted, deleteCookie, changeFilterState, importants, filter}}>
       <div className='wrapper'>
-        <h1>The purpose of my life</h1>     
+        <h1>Todo list </h1> 
+        {openLogin && <Login/> }
+        {openRegister && <Register />}
         <React.Suspense fallback={<Loader />}>
         <Seach changeTitle={handleChange} title={filters.title}/>
         </React.Suspense>
         < HeaderTable  />
         {loading && <Loader />}
         {todos.length ? (<TodoList className='test' todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
-        {modalIsOpen && <Modal className='test' isTourOpen={isOpenGuid} todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
+        {modalIsOpen && <Modal  isTourOpen={isOpenGuid} todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
         <Guid  closeTour={closeGuid} isTourOpen={isOpenGuid}/>
       </div>   
     </Context.Provider>

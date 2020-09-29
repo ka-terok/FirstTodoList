@@ -84,3 +84,65 @@
 .editText  {
     padding-right: 5px;
 }
+
+.modalLogin {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #e8ebee;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    height: 100%;
+    padding: 0 20px 0 20px
+}
+
+.modalBodyLogin {
+    margin-top: 10rem;
+    padding: 45px 40px;
+    height: 300px;
+    z-index:1000;  
+    background: white;
+    border: 1px solid #e0e3ed;
+    border-radius: 5px;
+    font-size: 14px;   
+    width: 250px; 
+}
+
+.lines {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.loginText  {
+    padding: 5px;
+    font-weight: 500;
+    justify-content: flex-end;
+}
+
+.loginButton {
+    background: #40e0d0;
+    font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+    padding: 8px;
+    color: white;
+    border:1px solid #40e0d0;
+    font-weight: 500;
+    width: 100%;
+    border-radius: 5PX;
+}
+
+.openWarning {
+    display: flex;
+    color: red;
+    text-align: center;
+    justify-content: center;
+    margin-top: 10px;
+    word-wrap: break-word;
+  }
+  
+.closeWarning {
+    display: none;
+}
