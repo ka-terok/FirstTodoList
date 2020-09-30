@@ -1,4 +1,9 @@
 import React, {useEffect} from 'react'
+import {
+  Route,
+  Switch,
+  Redirect
+} from "react-router";
 import TodoList from './Todo/TodoList'
 import Context from './context'
 import Loader from './Loader'
@@ -9,6 +14,7 @@ import Guid from './Guid';
 import HeaderTable from './HeaderTable';
 import Login from './Modal/login'
 import Register from './Modal/Register';
+
 moment.locale('ru')
 
 const filterTemple={
@@ -17,7 +23,7 @@ const filterTemple={
   length: ''
   }
 
-function App() {
+function App(props) {
   const [todos, setTodos] = React.useState([])
   const [modalIsOpen, setOpen] = React.useState(false)
   const [activeTodoId, setActiveTodoId] = React.useState(false)
@@ -26,6 +32,7 @@ function App() {
   const [isOpenGuid, setOpenGuid]=React.useState(false)
   const [openRegister, setOpenRegister]=React.useState(false)
   const [openLogin, setOpenLogin]=React.useState(false)
+
 
 useEffect(()=>{
   setOpenLogin(true)
@@ -299,18 +306,27 @@ function filterImportant(){
 return (
     <Context.Provider value={{removeTodo, openModalChange, closeLoginForm, closeRegistrForm, openLoginForm,  openRegistrForm, openGuid, closeModalChange, saveTodo, completedAll, deleteСompleted, deleteCookie, changeFilterState, importants, filter}}>
       <div className='wrapper'>
-        <h1>Todo list </h1> 
-        {openLogin && <Login/> }
-        {openRegister && <Register />}
-        <React.Suspense fallback={<Loader />}>
-        <Seach changeTitle={handleChange} title={filters.title}/>
-        </React.Suspense>
-        < HeaderTable  />
-        {loading && <Loader />}
-        {todos.length ? (<TodoList className='test' todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
-        {modalIsOpen && <Modal  isTourOpen={isOpenGuid} todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
-        <Guid  closeTour={closeGuid} isTourOpen={isOpenGuid}/>
-      </div>   
+        <Route history={props.history} path='/'>
+          {openLogin && <Login/>}
+        </Route>
+        <Route history={props.history} path='/register'>
+          {openRegister && <Register />}
+        </Route>
+        <Switch>
+          <Route history={props.history} path='/app' >
+          <h1>Todo list </h1> 
+          <React.Suspense fallback={<Loader />}>
+          <Seach changeTitle={handleChange} title={filters.title}/>
+          </React.Suspense>
+          < HeaderTable  />
+          {loading && <Loader />}
+          {todos.length ? (<TodoList className='test' todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
+          {modalIsOpen && <Modal  isTourOpen={isOpenGuid} todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
+          <Guid  closeTour={closeGuid} isTourOpen={isOpenGuid}/>
+          </Route>
+          <Redirect from='/' to='/home'/>
+        </Switch>
+      </div> 
     </Context.Provider>
   );
 }

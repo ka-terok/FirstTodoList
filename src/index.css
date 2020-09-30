@@ -432,3 +432,11 @@ visibility: hidden;
   cursor: pointer;
 }
 
+.kWwJhA {
+  z-index: 100 !important;
+}
+
+a {
+    cursor: pointer;
+    text-decoration: double;
+}

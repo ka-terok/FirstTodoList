@@ -1,6 +1,8 @@
 import Context from '../context'
 import React from 'react'
-
+import {
+    Link
+  } from "react-router-dom";
 
 const login = {
     email:'',
@@ -17,7 +19,7 @@ class Register extends React.Component {
     saveEmail() {
         const {openLoginForm}=this.context;   
         const {closeRegistrForm}=this.context; 
-        if ((login.email != '' || null)& (login.password != '' || null)) {
+        if ((login.email !== '' || null)& (login.password !== '' || null)) {
             localStorage.setItem('email', login.email)
             localStorage.setItem('password', login.password)
             closeRegistrForm()
@@ -47,11 +49,9 @@ render() {
                 <input className="inputModal" style={{borderRadius: '5px', border: '1px solid #e0e3ed'}} type='password' onChange={e => login.password = e.target.value}/>
                 </div>
                 <div className="lines"  style={{borderRadius: '5px', marginTop: '5px'}}>
-                    <div className="loginButton" onClick={()=>
-                        this.saveEmail() 
-                    }>
-                     Get started
-                    </div> 
+                    <div className="loginButton" onClick={()=>this.saveEmail()}>
+                        <Link to='/'> Get started </Link>
+                        </div> 
                 </div>
                 <div className={this.state.warning}>
                      You didn't fill out your email and password
