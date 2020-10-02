@@ -5,7 +5,7 @@ import TodoItem from './Todoitem'
 
 function TodoList(props){
     return(
-        <div >
+        <div className="dashboardMobil" >
             {props.todos.map((todo, index)=>{
                 return (
                 <TodoItem

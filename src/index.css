@@ -14,6 +14,10 @@ code {
     monospace;
 }
 
+.stringMobil {
+  display: none;
+}
+
 .option-input {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -76,11 +80,6 @@ code {
   margin: 0 auto;
   width: 950px;
 }
-
-.done {
-  text-decoration: line-through;  
-}
-
 .closeTimer {
 visibility: hidden;
 }
@@ -94,6 +93,19 @@ visibility: hidden;
   width: 100%;
   margin: 5px;
   }
+
+
+.todoIsOver {
+  display: flex;
+  flex-direction: row;
+  align-self: center;
+  align-items: center;
+  text-align: left;
+  width: 100%;
+  margin: 5px;
+  background-color: rgb(236, 174, 163);
+  color: rgb(250, 250, 250)
+}
 
 .todo:hover {
   box-shadow: 0 0 5px 2px rgba(122,122,122,0.5);
@@ -110,11 +122,13 @@ visibility: hidden;
   margin-right: 10px;
   }
 
-.todoChange {
-  width: 10%;
+
+.todoChangeModal {
+  width: 15%;
   display: flex;
   margin-right: 15px ;
   }
+
 
 .todoDelete {
   width: 3%;
@@ -164,6 +178,16 @@ visibility: hidden;
   padding: 8px;
   border:1px solid #40e0d0
 }
+
+.changeCheifUrgent {
+  background: #e8ebee;
+  font-family: "Helvetica Neue", "Helvetica", "Roboto", "Arial", sans-serif;
+  padding: 8px;
+  border:1px solid #40e0d0;
+  color: red;
+  font-size: 16px;
+  font-weight: 500;
+  }
 
 .addTodo {
   background: #40e0d0;
@@ -222,6 +246,16 @@ visibility: hidden;
   cursor: pointer;
   }
 
+  .done {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    align-items: center;
+    text-align: left;
+    width: 100%;
+    margin: 5px;
+    color:#a7b7c7
+  }
 
 .deleteСompleted:hover {
   box-shadow: 0 0 5px 2px rgba(122,122,122,0.5);
@@ -252,6 +286,11 @@ visibility: hidden;
 .doneForTimer {
   display: none;
 }
+
+.importanceModal {
+  display: none;
+}
+
 
 @-webkit-keyframes tremor {
   0%, 25% {
@@ -376,8 +415,6 @@ visibility: hidden;
   top: 15px;
   right: 15px;
 }
-
-
 .important {
   width: 40px;
   height: 40px;
@@ -436,7 +473,251 @@ visibility: hidden;
   z-index: 100 !important;
 }
 
-a {
+.loginText a {
     cursor: pointer;
     text-decoration: double;
+}
+
+.loginButton a {
+  cursor: pointer;
+  text-decoration: double;
+  color: white;
+}
+
+.lines a {
+  cursor: pointer;
+  text-decoration: double;
+  color: white;
+}
+
+.textMobal {
+  display: none;
+}
+
+@media (max-width: 768px) {
+.wrapper {
+    width: 93%;
+  }
+
+.todo {
+  display: none;
+}
+
+.todo2 {
+  display: block;
+  width: 100%;
+}
+
+.nameTable {
+  display: none;
+}
+
+.todoItem {
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.todoItemDate{
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.todoItemDate2{
+  width: 100%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.option-input {
+  display: none;
+}
+.option-input:hover {
+  display: none;
+}
+.option-input:checked {
+  display: none;
+}
+.option-input:checked::before {
+  display: none;
+}
+.option-input:checked::after {
+  display: none;
+}
+.option-input.radio {
+  display: none;
+}
+.option-input.radio::after {
+  display: none;
+}
+
+.important {
+  width: 20px;
+  height: 20px;
+  margin: 3px 15px 4px 3px;
+  color: #587597;
+  font-size: 16px;
+  text-align: center;
+  border: #40e0d0;
+}
+
+.completedAll {
+  font-size: auto;
+}
+
+.mobilTodo{
+    display: inline-block;
+    padding: 10px;
+    color: black;
+    background-color: white;
+    margin-bottom: 10px;
+    font-size: 14px;
+    width: fit-content;
+    flex-grow: 1;
+    border-radius: 5px;
+}
+
+.todoIsOver {
+  display: inline-block;
+  padding: 10px;
+  margin-bottom: 10px;
+  flex-direction: row;
+  font-size: 14px;
+  flex-grow: 1;
+  width: fit-content;
+  background-color: rgb(236, 174, 163);
+  color: rgb(250, 250, 250);
+  border-radius: 5px;
+}
+
+.done {
+  display: inline-block;
+  padding: 10px;
+  margin-bottom: 10px;
+  flex-direction: row;
+  font-size: 14px;
+  flex-grow: 1;
+  width: fit-content;
+  border: rgb(173, 173, 173) solid 1px; 
+  border-radius: 5px;
+}
+
+.textMobal {
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  padding: 2px;
+}
+
+.closeTimer {
+  display: none;
+}
+
+.completedAll {
+  display: none ;
+  width: auto;
+}
+
+.clearCookie {
+  display: none ;
+  width: auto;
+}
+
+.deleteСompleted {
+  display: none ;
+  width: auto;
+}
+
+.addTodo {
+  display: none ;
+  width: auto;
+}
+
+.buttomFilters {
+  display: none;
+}
+
+.buttonMobil {
+  border: rgb(61, 55, 55) solid 1px;
+  border-radius: 5px;
+  color: black;
+  padding: 5px;
+  text-align: center;
+  margin-right: 15px ;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.stringMobil {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.todoChange {
+  display: none;
+}
+
+.todoDelete {
+  display: none;
+}
+
+.liMobal {
+  display: none ;
+}
+
+.panel {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  font-size: 100%;
+  padding: 10px;
+}
+
+.important {  
+  width: 20px;
+  height: 20px;
+  margin: 3px 15px 4px 3px;
+  color: #587597;
+  font-size: 16px;
+  text-align: center;
+  border: #40e0d0; 
+  border-radius: 5px;
+}
+.seach {
+  padding: 10px;
+  justify-content: flex-start;
+  width: auto;
+}
+.openFilters {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  font-size: 100%;
+  padding: 10px;
+}
+
+.dashboardMobil {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.todoChangeModal {
+  display: none;
+}
+
+.importanceModal {
+  display: block;
+}
+
+.buttonImportanceMobil {
+  border: rgb(61, 55, 55) solid 1px;
+  border-radius: 5px;
+  color: red;
+  padding: 5px;
+  text-align: center;
+  margin-right: 15px ;
+  display: block;
+  margin-bottom: 10px;
+}
+
+
 }

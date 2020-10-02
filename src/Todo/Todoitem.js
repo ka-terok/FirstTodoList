@@ -15,41 +15,61 @@ function TodoItem({todo, index, onChange}){
     const {importants} = useContext(Context)
     const now = new Date();
     const [inputValue, setInputValue] = useState(todo.importants)
-
+    
     
     function checkInput(inputValue){
-        if ((inputValue) !== "") {
-        let newValue = parseInt(inputValue, 10)
-        if (!isNaN(newValue)) {
-            if (newValue < 6) { 
-                importants(newValue, todo.id)
-                } else {
-                    alert('Write 0-5')
-                    setInputValue('')     
-                    }
-            } else if (newValue = '') {
-                setInputValue('')
-            } else {
-                alert('Write 0-5')
-                setInputValue('') 
-            }} else {
-                setInputValue('') 
-            }
+        importants(inputValue, todo.id)
         }
 
-    if (todo.completed){
-        classes.push('done')       
-    }
-    
-    if (now > todo.deadline) {
-        classes.push ('timeIsOver')
+    function classImportance(){
+        if(inputValue==="Urgent") {
+            return 'changeCheifUrgent'
+        } else {
+            return 'changeCheif'
+        }
     }
 
-           
+    function classImportanceMObal(){
+        if(inputValue==="Urgent") {
+            return 'buttonImportanceMobil'
+        } else {
+            return 'buttonMobil'
+        }
+    }
+
+    function closeString(){
+    if (todo.completed || (now > todo.deadline)) {
+        return 'closeTimer todoItemDate2'        
+    } else {
+        return 'todoItemDate2'
+        }
+    } 
+
+    function timeIsOver(){
+        if (now > todo.deadline) {
+            return 'todoIsOver'        
+        } else if (todo.completed) {
+            return 'done'
+        } else {
+            return 'todo mobilTodo'
+        }
+    }
+    
     return (
-        <div className="todo">
+        <div className={timeIsOver()}>
             <div className='todo2'>
                 <div >  
+                    <div className="stringMobil" >
+                        <div className="buttonMobil" onClick={()=>onChange(todo.id)}>
+                            Done
+                        </div>
+                        <div className="buttonMobil" onClick={() => openModalChange(todo.id)}>
+                            Change
+                        </div>
+                        <div className="buttonMobil" onClick={()=> removeTodo(todo.id)}>
+                            Delete
+                        </div>
+                    </div>
                     <input className="option-input" 
                     type="checkbox" 
                     checked={todo.completed}
@@ -57,36 +77,51 @@ function TodoItem({todo, index, onChange}){
                     />
                 </div> 
                 <div className={classes.join(' ')} style={{paddingRight: '5px'}}>
-                    {index+1 }
+                    <div className="liMobal" >{index+1 }</div>
                 </div>
-                <div  className={'todoItem'+ ' '+ classes.join(' ')} >
-                    {todo.title}                     
+                <div  style={{wordBreak: 'breakWord'}} className={'todoItem'+ ' '+ classes.join(' ')} >
+                    <div className="textMobal">Task:</div> 
+                    <div style={{wordBreak: 'breakWord'}}>{todo.title} </div>             
                 </div> 
-                <div className={"todoItemDate" + ' '+ classes.join(' ')} > 
+                <div className={"todoItemDate" + ' '+ classes.join(' ')} >
+                    <div className="textMobal">Deadline:</div> 
                     {todo.deadline ? moment(todo.deadline).format('DD MMM YYYY h:mm:s') : 'Без срока'}
                 </div> 
-                <div className={todo.completed ? 'closeTimer + todoItemDate2' : 'todoItemDate2' }>
+                <div className={closeString()}>
+                    <div className={todo.completed ? 'closeTimer + textMobal' : 'textMobal'}>Before the deadline:</div>
                     <Timer deadline={todo.deadline}/>
                 </div>
                 <div className={'todoItemDate2'}> 
+                    <div className={!todo.completed ? 'textMobal': 'textMobal'} >Done:</div>
                     {!todo.completed ? '' : todo.done}   
                 </div>
             </div> 
-                <div> 
-                    <input className='important' value={inputValue} onChange={e => {
+                <div className="importanceModal">
+                    <div className="textMobal">Importance:</div> 
+                    <select  style={{width: '100%'}}  className={classImportanceMObal()} list="character" value={inputValue} onChange={e => {
+                            setInputValue(e.target.value)
+                            checkInput(e.target.value)
+                            }}>
+                                <option>Urgent</option>
+                                <option>Normal</option>
+                    </select> 
+                </div>                
+                <div className='todoChangeModal'>
+                    <select  style={{width: '100%'}}  className={classImportance()} list="character" value={inputValue} onChange={e => {
                         setInputValue(e.target.value)
                         checkInput(e.target.value)
-                        }}
-                    />
+                        }}>
+                            <option>Urgent</option>
+                            <option>Normal</option>
+                     </select>              
                 </div>
-                <div className="todoChange" > 
+                <div className="todoChangeModal" > 
                     <div className="changeCheif" onClick={() => openModalChange(todo.id)}>Change</div>
                 </div >
                 <div className="todoDelete" onClick={()=> removeTodo(todo.id)}> 
                     <img className='wibro' src={deteteTodo} alt={'Delete'}/>                 
                 </div>
         </div>
-         
     )
 }
 

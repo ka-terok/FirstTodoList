@@ -11,7 +11,11 @@ function HeaderTable (){
     const {changeFilterState}=useContext(Context)
     const [openDiv, setOpenDiv]= useState("panelFilters")
     const {openGuid}=useContext(Context)
+    const [importance, setImportance]= useState('bigToLess')
     
+    function changeFiltersImportance (){
+        importance === 'bigToLess'? setImportance("lessToBig") : setImportance('bigToLess')
+    }
     
     function openFilters (){
         openDiv === "panelFilters" ? setOpenDiv('openFilters') : setOpenDiv('panelFilters')
@@ -20,11 +24,11 @@ function HeaderTable (){
         <div>
             <div>
                 <div className='panel'>
-                    <div className='completedAll' onClick={()=> openGuid()}> Start learn</div> 
-                    <div className='clearCookie' onClick={() => deleteCookie('cookieTodo')}>Clear Cookie</div>
-                    <div className='deleteСompleted' onClick={()=> deleteСompleted()}> Delete сompleted</div>
-                    <div className='completedAll' onClick={()=> completedAll()}> Completed All</div> 
-                    <div className='addTodo' onClick={()=>openModalChange()}>Add todo</div>
+                    <div className='completedAll buttonMobil' onClick={()=> openGuid()}> Start learn</div> 
+                    <div className='clearCookie buttonMobil' onClick={() => deleteCookie('cookieTodo')}>Clear Cookie</div>
+                    <div className='deleteСompleted buttonMobil' onClick={()=> deleteСompleted()}> Delete сompleted</div>
+                    <div className='completedAll buttonMobil' onClick={()=> completedAll()}> Completed All</div> 
+                    <div className='addTodo buttonMobil' onClick={()=>openModalChange()}>Add todo</div>
                 </div>
             </div>   
             <div className='panel'>
@@ -38,33 +42,32 @@ function HeaderTable (){
                </div>
             </div> 
             <div className={openDiv}>
-                    <div className='buttomFilters' onClick={()=>changeFilterState("lessToBig")}>
-                        Important ▲
+                    <div className='buttomFilters buttonMobil' onClick={()=>{
+                        changeFiltersImportance ();
+                        changeFilterState(importance)
+                    }}>
+                        Important ▲▼
                     </div >
-                    <div className='buttomFilters' onClick={()=>changeFilterState("bigToLess")} >
-                        Important ▼
-                    </div>
-                    <div className='buttomFilters' onClick={()=>changeFilterState("alphabetBigToLess")}>
+                    <div className='buttomFilters buttonMobil' onClick={()=>changeFilterState("alphabetBigToLess")}>
                         Title A-z▼ 
                     </div>
-                    <div className='buttomFilters'onClick={()=>changeFilterState("alphabetLessToBig")}>
+                    <div className='buttomFilters buttonMobil'onClick={()=>changeFilterState("alphabetLessToBig")}>
                         Title A-z▲ 
                     </div>
-                    <div className='buttomFilters'onClick={()=>changeFilterState("leghtBigToLess")}>
+                    <div className='buttomFilters buttonMobil'onClick={()=>changeFilterState("leghtBigToLess")}>
                         Lenght title ▼ 
                     </div>
-                    <div className='buttomFilters'onClick={()=>changeFilterState("leghtLessToBig")}>
+                    <div className='buttomFilters buttonMobil'onClick={()=>changeFilterState("leghtLessToBig")}>
                         Lenght title ▲  
                     </div>
             </div>
-
             <div className="nameTable">
-                <div style={{width: '40%'}}>Task</div> 
+                <div style={{width: '35%'}}>Task</div> 
                 <div style={{width: '10%'}}>Deadline</div>
-                <div style={{width: '17%', textAlign: 'center'}}>Before the <br/>
+                <div style={{width: '13%', textAlign: 'center'}}>Before the <br/>
                  deadline</div>
                 <div style={{width: '12%', textAlign: 'center'}}>Done</div>
-                <div style={{width: '9%', textAlign: 'center'}}>Imp(1-5)</div>
+                <div style={{width: '13%', textAlign: 'center'}}>Imp(1-5)</div>
                 <div style={{width: '12%', textAlign: 'center'}}></div>
             </div>
         </div>

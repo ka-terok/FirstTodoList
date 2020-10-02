@@ -58,7 +58,7 @@ render() {
                     <div className="loginText" onClick={()=>openRegistrForm()}>
                         <Link to='/register'>
                         Don't have an account? 
-                        <div style={{color: 'blue'}}>Sign U</div> 
+                        <div style={{color: 'blue'}}>Sign Uр</div> 
                         </Link>   
                     </div>
                  

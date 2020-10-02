@@ -61,7 +61,7 @@ function loadTodos () {
           const myDate  = randomDate(new Date(2020, 9, 8), new Date());
           item.deadline = moment(myDate);
           item.completed && (item.done = moment(new Date()).format('DD MMM YYYY h:mm:s'))
-          item.importants = 1 
+          item.importants = "Normal" 
           return item
           })
           setTodos(todos)
@@ -201,7 +201,10 @@ function completedAll () {
   }
 
 function filter() {
-  return  todos.filter(todo => todo.title.indexOf(filters.title) !== -1).sort(filterImportant())}
+  return  todos
+  .filter(todo => todo.title.indexOf(filters.title) !== -1)
+  .sort(filterImportant())
+}
 
 function changeFilterState(value) {
   switch (value) {
@@ -283,9 +286,15 @@ function importants(newValue, id) {
 
 function filterImportant(){
   if (filters.important==="lessToBig") {
-    return (prev, next) => prev.importants - next.importants;
+    return (prev, next) => {
+      if ( prev.importants === 'Normal' ) return -1;
+      if ( next.importants === 'Urgent' ) return 1;
+    }
   } else if(filters.important === "bigToLess") {
-    return (prev, next) => next.importants - prev.importants;
+    return (prev, next) => {
+    if ( prev.importants === 'Urgent' ) return -1;
+    if ( next.importants === 'Normal' ) return 1;
+    }
   } else if(filters.length === "alphabetBigToLess") {
     return (prev, next) => {
       if ( prev.title < next.title ) return -1;
@@ -320,7 +329,9 @@ return (
           </React.Suspense>
           < HeaderTable  />
           {loading && <Loader />}
+        
           {todos.length ? (<TodoList className='test' todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
+          
           {modalIsOpen && <Modal  isTourOpen={isOpenGuid} todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
           <Guid  closeTour={closeGuid} isTourOpen={isOpenGuid}/>
           </Route>
