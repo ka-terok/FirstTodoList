@@ -14,6 +14,7 @@ import Guid from './Guid';
 import HeaderTable from './HeaderTable';
 import Login from './Modal/login'
 import Register from './Modal/Register';
+import DashBoard from './DashBoard';
 
 moment.locale('ru')
 
@@ -160,7 +161,6 @@ function saveTodo (todo) {
   const doIt = window.confirm (`Are you sure you want to add a task?`);
   if (doIt) {
    if (todo && todo.id) {
-
       const newTodos = todos.map(todoO => todoO.id === todo.id ? todo : todoO)
       setTodos(newTodos)
       document.cookie = `cookieTodo=${JSON.stringify(newTodos)}`
@@ -266,11 +266,11 @@ function openGuid(){
   setOpenGuid(true)
 }
 
-function checkРassword() {
+/*function checkРassword() {
   while (login != 'sekret') {
     var login = prompt('Enter the password', '')
   }
-}
+}*/
 
 function importants(newValue, id) {
   setTodos(todos.map(item =>{
@@ -327,11 +327,10 @@ return (
           <React.Suspense fallback={<Loader />}>
           <Seach changeTitle={handleChange} title={filters.title}/>
           </React.Suspense>
-          < HeaderTable  />
-          {loading && <Loader />}
-        
-          {todos.length ? (<TodoList className='test' todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}
-          
+          <DashBoard  todo={todos}/>
+          < HeaderTable  />          
+          {loading && <Loader />}        
+          {todos.length ? (<TodoList className='test' todos={filter()}  onToggle={toggleTodo} />) : (loading ? null : <p> No todos </p>)}          
           {modalIsOpen && <Modal  isTourOpen={isOpenGuid} todo={todos.find(todo=>todo.id == activeTodoId)}/>} 
           <Guid  closeTour={closeGuid} isTourOpen={isOpenGuid}/>
           </Route>

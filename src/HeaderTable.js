@@ -67,7 +67,7 @@ function HeaderTable (){
                 <div style={{width: '13%', textAlign: 'center'}}>Before the <br/>
                  deadline</div>
                 <div style={{width: '12%', textAlign: 'center'}}>Done</div>
-                <div style={{width: '13%', textAlign: 'center'}}>Imp(1-5)</div>
+                <div style={{width: '13%', textAlign: 'center'}}>Importance</div>
                 <div style={{width: '12%', textAlign: 'center'}}></div>
             </div>
         </div>

@@ -7,10 +7,7 @@ import endTour from './endTour.png'
 export default  class Guid extends React.Component {
     
     render() {
-        
         const {openModalChange} = this.context;
-        const {saveTodo}=this.context;
-        
         const steps = [{
             selector: '.first-step',
             content: 'This is your first time in the program. We will tell you how to use it ',
@@ -34,7 +31,7 @@ export default  class Guid extends React.Component {
             {selector: '.first-step',
             content:
                 <div>Сongratulations you're ready to go!
-                    <img style={{width: '70%', padding: '1rem'}} src={endTour} />
+                    <img style={{width: '70%', padding: '1rem'}} src={endTour} alt='Finished guide' />
                 </div>
                 }
         ]

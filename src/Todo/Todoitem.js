@@ -1,10 +1,9 @@
 import React, {useContext, useState} from 'react'
 import Context from '../context'
-import PropTypes, { func } from 'prop-types'
+import PropTypes from 'prop-types'
 import deteteTodo from './delete.png'
 import Timer from './Timer'
 import moment from 'moment';
-import { max } from 'moment'
 moment.locale('ru')
 
 

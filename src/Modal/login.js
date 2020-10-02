@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import App from '../App'
 import Context from '../context';
 import {
@@ -33,7 +33,7 @@ class login extends React.Component {
 
 render() {
     const {openRegistrForm}=this.context
-    const {closeLoginForm}=this.context 
+    
     return (
         <div className="modalLogin" >
             <div className='modalBodyLogin' > 
